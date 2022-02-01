@@ -1,0 +1,7 @@
+https://www.youtube.com/watch?v=jF9wdF0sViI&t=643s
+
+https://www.youtube.com/watch?v=dFAlCnSjqtY&t=123s
+
+
+*jwt 
+- composer require -w tymon/jwt-auth --ignore-platform-reqs

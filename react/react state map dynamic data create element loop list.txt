@@ -1,0 +1,39 @@
+https://drive.google.com/file/d/13JJEjPW3s_pNuVBMY1rOsZaih6ZJsi9c/view?usp=sharing
+
+
+
+class App extends Component {
+  // State
+  state = {
+    books: [
+      { bookName: "1984", writer: "George Orwell" },
+      { bookName: "The Da Vinci Code", writer: "Dan Brown" },
+      { bookName: "The Alchemist", writer: "Paulo Coelho" }
+    ],
+    otherProp: "I am some other Property"
+  }
+
+  render() {
+
+    // showing books with map //make tag
+    let bookElements = this.state.books.map(book => {
+      return (
+        <Book
+          bookName={book.bookName}
+          writer={book.writer}
+        />
+      );
+    });
+
+    console.log(bookElements);
+
+    return (
+      <div className="App">
+        {/* inline css here */}
+        <h1 className="header">Book List</h1>
+
+        {bookElements}
+      </div >
+    );
+  }
+}

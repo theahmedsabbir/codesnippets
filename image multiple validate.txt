@@ -1,0 +1,7 @@
+
+
+    	$r->validate([
+			'name'          => 'unique:brands',
+			'tyre_images.*' =>  'mimes:jpeg,jpg,png,bmp',
+			'logo'          =>  'mimes:jpeg,jpg,png,bmp',
+    	]);

@@ -1,0 +1,93 @@
+https://reactrouter.com/docs/en/v6/getting-started/installation
+
+
+
+--
+
+npm install react-router
+npm install react-router-dom@6
+
+--
+
+//app.js
+
+import { BrowserRouter } from "react-router-dom";
+
+
+let App = () => {
+  return (
+    <BrowserRouter>
+      <MainComponent />
+    </BrowserRouter>
+  );
+}
+
+--
+
+//MainComponent.js
+
+import { BrowserRoutes, Routes, Route, Link, NavLink } from 'react-router-dom';
+
+                {/* nav for router */}
+                <div className="routers" style={{ marginBottom: '10px', }}>
+                    <Link to="/" style={{ marginLeft: '15px' }}>All Books</Link >
+                    <Link to="/new" style={{ marginLeft: '15px' }}>New Book</Link >
+                </div>
+
+		//or
+		
+                <nav className="routers" style={{ marginBottom: '10px', }}>
+                    <NavLink to="/" style={{ marginLeft: '15px' }}>All Books</NavLink >
+                    <NavLink to="/new" style={{ marginLeft: '15px' }}>New Book</NavLink >
+                </nav>
+
+                {/* defining routes */}
+                <Routes>
+                    <Route path="/" exact element={<h1>All Books</h1>} />
+                    <Route path="/new" exact element={<h1>New Book</h1>} />
+                </Routes>
+
+
+//css
+a.active {background: #ff0000cc;color: white;padding: 10px;}
+
+
+--
+
+//router passing with unique id 
+<Link to={"/book/details/" + props.id}>Read Now</Link>
+ 		<Routes>
+                    <Route path="/book/details/:id" exact element={<BookDetails book={this.state.selected_book} />} />
+                </Routes>
+
+-- 
+//redirect 
+
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+
+                <Routes>
+                    <Route path="/book-list" exact element={this.state.showBooks ? bookElements : null} />
+                    <Route
+                        path="*"
+                        element={<Navigate to="/book-list" />}
+                    />
+                    {/* <Redirect from="/" to="/book-list"></Redirect> */} //old way
+                </Routes>
+
+-- 
+//router props
+//withRouter - before v6
+
+https://drive.google.com/file/d/1GIXKHh6lPS9q5BfMRLcuVcbB-2ggI0Xu/view?usp=sharing
+
+--
+
+//switch - may have been removed 
+import { Route, NavLink, Switch } from 'react-router-dom';
+
+                <Switch>
+                    <Route path="/" exact render={() => books} />
+                    <Route path="/new-book" exact component={NewBook} />
+                    <Route path="/:id" render={() => <BookDetail book={this.state.selectedBook} />} />
+                </Switch>
+

@@ -1,0 +1,8 @@
+    $(function() {
+                toastr.success("Doctor insert successfully done", 'Successfull.. !!', {
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+            "progressBar": true,
+            timeOut: 3000
+        });
+            });

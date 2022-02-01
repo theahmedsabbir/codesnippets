@@ -1,0 +1,14 @@
+https://stackoverflow.com/questions/48654714/connection-could-not-be-established-with-host-smtp-mailtrap-io-connection-timed
+
+
+
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=587
+MAIL_USERNAME=*******
+MAIL_PASSWORD=********
+MAIL_FROM_ADDRESS=from@example.com
+MAIL_FROM_NAME=Example
+switch the MAIL_PORT between (25 or 465 or 587 or 2525)
+
+

@@ -1,0 +1,247 @@
+// attach pdf 
+
+            $pdf = \PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('version-1.fontend.email.order', compact('order', 'customer'));
+
+            $email = $request->email;
+
+
+            Mail::send('version-1.fontend.email.order',compact('order', 'customer'),
+                function ($msg) use ($email, $pdf){
+                    $msg->from('admin@dkcc.com', 'Diplomacy');
+                    $msg->subject('Subject: Order Confirmation Email');
+                    $msg->attachData($pdf->output(), "Invoice.pdf");
+                    $msg->cc('admin@topishi.com');
+                    $msg->to($email);
+                });
+
+//attach normal files from location 
+        
+        $tc = asset('email/General-Terms-and-Conditions.docx');
+        $pp = asset('email/Privacy-Policy.docx');
+
+        Mail::send('public.doctors.email.query',compact('data'),
+            function ($msg) use ($email, $tc,$pp){
+                $msg->from('admin@topishi.com', 'Topishi');
+                $msg->subject('Subject: Welcome to topishi');
+
+		//if error occurs try this 
+		
+                //$tc = 'email/General-Terms-and-Conditions.docx';
+                //$pp = 'email/Privacy-Policy.docx';
+
+                $msg->attach($tc, [
+                    'as' => 'General Terms and Conditions.docx',
+                ]);                           
+                $msg->attach($pp, [
+                    'as' => 'Privacy-Policy.docx',
+                ]);              
+
+                $msg->to($email);
+            });
+
+
+
+// forgot password 
+
+// use App\Client;
+use App\Mail\ClientResetPasswordLink;
+use Str;
+use Mail;
+
+
+    public function forgotPassword(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email',
+        ]);
+
+        $client = User::select('email')->where('email', $request->email)->first();
+        $token = Str::random(64);
+
+        if ($client) {
+            \DB::table('password_resets')->insert([
+                'email' => $request->email,
+                'token' => $token
+            ]);
+            Mail::to($client->email)->send(new ClientResetPasswordLink($token));
+            return response()->json([
+                'status' => true,
+                'message', 'Password reset link has been sent your email. Please check your email and confirm'
+            ]);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message', 'Email do not match, Please try again'
+            ]);
+        }
+    }
+
+==
+
+php artisan make:mail ClientResetPasswordLink 
+
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class ClientResetPasswordLink extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $token;
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct($token)
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->view('frontend.email.reset-link')->with('token', $this->token);
+    }
+}
+
+
+//view
+
+<!doctype html>
+<html lang="en">
+
+<body>
+<div>
+    <p>You have received this email because of a password recovery for the user account "1 day delivery" was instigated by you on delivery.</p>
+    <a href="{{ url('user/reset-password-form?token='.$token) }}">
+        {{ url('user/reset-password-form?token='.$token) }}
+    </a>
+    <br/>
+
+    <p>Thanks!</p>
+</div>
+</body>
+</html>
+
+
+
+
+//simple mail send for verification 
+
+
+//controller
+
+use Illuminate\Support\Str;
+use Mail;
+use App\Mail\ClientVerificationToken;
+
+
+
+        $token = Str::random(64);
+        \DB::table('password_resets')->insert([
+            'email' => $supplier->email,
+            'token' => $token,
+        ]);
+        Mail::to($supplier->email)->send(new ClientVerificationToken($token));
+
+
+//ClientVerificationToken
+
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class ClientVerificationToken extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $token;
+    public $supplier;
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct($token, $supplier)
+    {
+        $this->token = $token;
+        $this->supplier = $supplier;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->subject('Jamil Vendor Verification')
+                    ->from('admin@jamil.com')
+                    ->view('email.verification-token')->with([
+                        'token' => $this->token,
+                        'supplier' => $this->supplier,
+                    ]);
+    }
+}
+
+
+//route
+Route::get('supplier/email-verification/{user_id}/{token}', 'Auth\RegisterController@verifyEmail')->name('supplier.verification');
+
+
+//view template 
+<!doctype html>
+<html lang="en">
+<title>Jamil</title>
+<body>
+<div>
+    <p>Thank you for registering. Please click the link below to complete your registration</p>
+    <a href="{{ url('supplier/email-verification/'. $supplier->id . '/' . $token) }}">
+        {{ 'Click Here' }}
+    </a>
+    <br/>
+
+    <p>Thanks!</p>
+</div>
+</body>
+</html>
+
+//final verification controller 
+
+
+
+    public function verifyEmail($supplier_id, $token){
+        echo $token;
+        // echo $supplier_id;
+
+        dd(Supplier::find($supplier_id));
+
+        $supplier = Supplier::find($supplier_id);
+
+        if(DB::table('password_resets')->where('token', $token)->first() != null){
+            if($supplier != null){
+                $supplier->is_email_verified = 1;
+                $supplier->save();
+            }else{
+                return redirect()->back()->with('error', 'Supplier data not found. Please try again.');
+            }
+        }else{
+            return redirect()->back()->with('error', 'Invalid token.');
+        }
+    }

@@ -1,0 +1,12 @@
+
+
+
+        if (file_exists('admin/order/supplierLpo/' . $supplierLpo->file)) {
+            unlink('admin/order/supplierLpo/' . $supplierLpo->file);
+        }
+
+
+
+            if (file_exists(public_path('product'. '/' . end($currentImagePath)))) {
+                unlink(public_path('product'. '/' . end($currentImagePath)));
+            }

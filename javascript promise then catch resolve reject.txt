@@ -1,0 +1,67 @@
+// Promises
+// .then
+let persons = [
+    { firstName: "Simanta", lastName: "Paul" },
+    { firstName: "Fazle", lastName: "Rahat" }
+]
+
+
+
+createPerson({ firstName: "Rony", lastName: "Chy" })
+    .then(getPerson)
+    .catch(function (err) {
+        console.log(err);
+    });
+
+function createPerson(person) {
+    let prom = new Promise(function (resolve, reject) {
+        persons.push(person);
+        let error = false;
+
+        if (!error) {
+            resolve();
+        }
+        else {
+            reject('Error!: Something Wrong!');
+        }
+
+    });
+    return prom;
+}
+
+function getPerson() {
+    setTimeout(function () {
+        let output = '';
+        persons.forEach(function (person) {
+            output += `<li>${person.firstName} ${person.lastName}</li>`
+        });
+        document.getElementById('output').innerHTML = output;
+    }, 500);
+}
+
+
+// new example 
+
+// Promises
+// Successful -> resolve
+// Failed -> reject
+let prom = new Promise((resolve, reject) => {
+    let a;
+    setTimeout(() => {
+        a = 1 + 3;
+        if (a == 2) {
+            resolve('Success');
+        } else {
+            reject('Failed');
+        }
+    }, 4000);
+})
+// .then .catch
+prom.then((message) => {
+    console.log("I am from then " + message);
+}).catch((message) => {
+    console.log("I am from catch " + message);
+})
+
+
+console.log("I am after Promise");

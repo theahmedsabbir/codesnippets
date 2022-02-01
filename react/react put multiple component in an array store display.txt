@@ -1,0 +1,21 @@
+const Burger = (props) => {
+    // console.log(props);
+    var all_ingredients = [];
+
+    props.ingredients.map((ingredient, key) => {
+        for (let i = 1; i <= ingredient.amount; i++) {
+            all_ingredients.push(<Ingredient key={key + '.' + i} portion={ingredient.portion} />)
+        }
+    });
+    // all_ingredients += <Ingredient portion="top" />;
+    console.log(all_ingredients);
+    return (
+        <div className="text-center py-5">
+            <Ingredient portion="top" />
+            {all_ingredients}
+            <Ingredient portion="bottom" />
+        </div>
+    );
+}
+
+export default Burger;

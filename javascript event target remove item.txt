@@ -1,0 +1,10 @@
+https://drive.google.com/file/d/1-9oXRRl5IJVG403ai-SJ4vZ4FCulRksN/view?usp=sharing
+
+document.querySelector('ul').addEventListener('click', removeItem);
+
+function removeItem(e) {
+    if (e.target.hasAttribute('key')) {
+        e.target.parentElement.remove();
+    }
+    // link.parentNode.remove()
+}

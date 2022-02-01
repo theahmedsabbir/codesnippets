@@ -1,0 +1,4 @@
+{this.state.alert_message != "" ? <div className="alert alert-danger">Hi</div> : ''}
+
+
+{this.state.alert_message != "" ? <div className="alert alert-danger">{this.state.alert_message}</div> : ''}

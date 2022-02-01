@@ -1,0 +1,89 @@
+//link
+https://drive.google.com/file/d/1bjxZMRWgHEmbjtpEUmBbocl4J6Hm2FDC/view
+https://drive.google.com/file/d/13hKSDnZlGo0icOa3nlRYrBSAG7h6P5va/view?usp=sharing
+
+
+//compoer.json - set type as module 
+
+npm init --yes
+{
+  "name": "MyApp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}
+
+//example
+//root folder - component.js
+
+
+export let a = 45; 	//normal export
+export let str = "Bohubrihi";
+export let obj = {
+    name: "Rahat", age: 27
+}
+
+let arr = [1, 2, 3, 4]
+
+export let hello = () => {
+    console.log("Hello World");
+}
+
+
+export class Person {
+    constructor() {
+        this.name = "ABC"
+    }
+}
+
+export default arr; //detault export
+
+
+//other.js
+
+class App {
+    constructor(text) {
+        this.text = text
+    }
+
+    printSomething() {
+        console.log(this.text);
+    }
+}
+
+export default App;
+
+
+//index.js
+
+//import numbers, { str, a, hello, obj as xyz, Person } from './component.js'; //normal import
+import Application from './other.js'; //default import
+import * as all from './component.js'; //all import
+
+// console.log(str);
+
+// hello();
+
+// console.log(xyz);
+
+// let person = new Person();
+
+// console.log(person);
+
+// let newApp = new Application("Some random text");
+
+// console.log(newApp);
+
+// console.log(numbers);
+
+console.log(all.a);
+console.log(all.str);
+all.hello();
+

@@ -1,0 +1,58 @@
+*link - bohubrihi course - 2. react with redux - setting up env - no 2 (node js and npm)
+https://drive.google.com/file/d/12g5w6YUQZGNkij3ORR6m3YCHNjQd371J/view?usp=sharing
+
+Setup Node and NPM:
+• Node.js Site Link: https://nodejs.org/
+• Check Node Version:
+
+node -v
+node --version
+
+
+• Check NPM Version
+npm -v
+• NPM Repository: https://npmjs.com/
+
+Setup Node Modules:
+• Check all the available commands
+npm help
+• Initialize with package.json file
+npm init
+npm init --yes
+
+• Install date-format Package
+npm install date-format --save
+• Install bootstrap Package
+
+npm install bootstrap --save
+• Uninstall bootstrap Package
+npm uninstall bootstrap --save
+• Install Packages from package.json
+npm install
+• Install bootstrap 3.3.7 version
+npm install bootstrap@3.3.7 --save
+
+
+
+
+
+
+
+
+• Update bootstrap package
+npm update bootstrap
+• Install live-server as Dev Dependency
+npm install live-server --save-dev
+• Install live-server from Dev Dependency
+npm uninstall live-server --save-dev
+• Install typescript as Global Dependency
+npm install typescript -g
+• Uninstall typescript from Global Dependency
+npm uninstall typescript -g
+
+• Check Local Root
+
+npm root
+• Check Global Root
+
+npm root -g

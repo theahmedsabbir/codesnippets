@@ -1,0 +1,45 @@
+https://codepen.io/theahmedsabbir/pen/XWeeNNN
+https://drive.google.com/file/d/14cojHmco6bqCApeQ3beS3SulBya2BsgH/view?usp=sharing
+
+//index.html 
+<div id="persons"></div> 
+
+
+//css
+.person{
+  border: 1px solid black;
+  width: 200px;
+  height:200px;
+  padding: 10px;
+  display:inline-block;
+  float:left;
+}
+
+
+//js
+use https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.production.min.js
+use https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.production.min.js
+
+
+function Person(props){
+  
+  return(
+    <div className="person">
+      <h1>Name: {props.name}</h1>
+      <p>Age: {props.age}</p>
+    </div>
+  );
+  
+}
+
+
+let Persons = (
+  <div>
+      <Person name="karim" age="23" />
+      <Person name="mahmudullah" age="45" />
+      <Person name="shakil" age="100" />
+  </div>
+);
+
+ReactDOM.render(Persons, document.querySelector('#persons')); 
+

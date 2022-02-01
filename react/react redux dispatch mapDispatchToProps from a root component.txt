@@ -1,0 +1,99 @@
+react redux dispatch mapDispatchToProps from a root component
+
+https://drive.google.com/file/d/1aHx14wWZxBsJ5bq9ZJc1ZfKzEu4lfy_5/view?usp=sharing
+https://drive.google.com/file/d/18BSkqzzJ3DsOX1nS-_JUE1O2CSWIMs5j/view?usp=sharing
+
+//from a root component
+https://drive.google.com/file/d/1aJosr1HGx-SluU8yiptylW26m7SkKfi-/view?usp=sharing
+
+
+import React, { Component } from "react";
+import { connect } from 'react-redux';
+
+
+// map dispatch to props
+
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addComment: (dish_id, rating, comment, author, date) => dispatch({
+            type: 'ADD_COMMENT',
+            payload: {
+                rating: rating,
+                comment: comment,
+                author: author,
+                date: date,
+            },
+            dish_id: dish_id,
+        }),
+    }
+
+}
+
+
+
+class CommentForm extends Component {
+    constructor(props) {
+        super(props);
+
+        // Defining State
+        this.state = {
+            name: "",
+            rating: "",
+            comment: "",
+        };
+    }
+
+    getInfo = (event) => {
+        this.setState({
+            // getting variable name dynamically
+            [event.target.name]: event.target.value,
+        });
+        // console.log(this.state);
+    }
+
+    // getting variable name dynamically
+    saveData = (event) => {
+        event.preventDefault();
+
+        // dispatch data to redux store //addComment dispatch
+        this.props.addComment(this.props.dish_id, this.state.rating, this.state.comment, this.state.name, new Date().toDateString());
+
+        console.log("commentForm props", this.props);
+    }
+
+    render() {
+        console.log("commentForm props", this.props);
+        return (
+            <div>
+                <form onSubmit={this.saveData}>
+                    <div className="form-group">
+                        <label>Name</label>
+                        <input type="text" onChange={this.getInfo} name="name" id="name" value={this.state.name} className="form-control" />
+                    </div>
+                    <div className="form-group">
+
+                        <label>Rating</label>
+                        <select onChange={this.getInfo} className="form-control" name="rating" id="rating" value={this.state.rating}>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+
+                        <label>Comment</label>
+                        <textarea onChange={this.getInfo} name="comment" id="comment" value={this.state.comment} className="form-control"></textarea>
+                    </div>
+                    <div className="form-group">
+
+                        <input type="submit" value="Submit" className="btn btn-primary" />
+                    </div>
+                </form>
+            </div >
+        );
+    }
+}
+
+// export default CommentForm;
+export default connect(null, mapDispatchToProps)(CommentForm);

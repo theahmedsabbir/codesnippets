@@ -1,0 +1,15 @@
+//controller 
+
+
+
+    public function cart(){
+        $mobile_van_charges = json_encode(MobileVanCharge::orderBy('minimum', 'asc')->get());
+        return view('frontend.product.cart', compact('mobile_van_charges'));
+    }
+
+
+// in view - javascript 
+
+
+		let mobile_van_charges = {!! $mobile_van_charges !!};
+		console.log(mobile_van_charges);

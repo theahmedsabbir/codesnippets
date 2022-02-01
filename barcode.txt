@@ -1,0 +1,4 @@
+https://investmentnovel.com/laravel-barcode-generator-tutorial-with-example/#:~:text=%20Laravel%20Barcode%20Generator%20Tutorial%20With%20Example%20,artisan%20make%20%3Acontroller%20BarcodegeneratorController%0AIt%20will%20build...%20More%20
+
+
+https://github.com/milon/barcode

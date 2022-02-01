@@ -1,0 +1,278 @@
+https://www.youtube.com/watch?v=VUet2wq22-o
+https://docs.laravel-excel.com/3.1/exports/
+https://www.tutsmake.com/laravel-8-import-export-excel-csv-file/
+
+export with view
+https://docs.laravel-excel.com/3.1/exports/from-view.html
+
+
+
+
+//csv export 
+
+use App\Exports\HistoryExport;
+
+    public function reportExcelAll(\Maatwebsite\Excel\Excel $excel){
+
+
+        return $excel->download(new ReportExport(), 'report.csv', \Maatwebsite\Excel\Excel::CSV);
+//	return $excel->download(new DriverExport(), 'driverReport.xlsx', \Maatwebsite\Excel\Excel::XLSX)
+//        return Excel::download(new ReportExport, 'income-report.xlsx');
+    }
+
+
+
+	//report export 
+
+<?php
+
+namespace App\Exports;
+
+use App\Models\Order;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+
+class ReportExport implements FromCollection, WithHeadings
+{
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function collection()
+    {
+        $orders = Order::all();
+//        dd(array("name", "sabbir"));
+
+        $rows = array();
+
+        foreach ($orders as $order){
+            $cols = array();
+            $i = 1;
+            $date = $order->created_at->format('d-m-Y');
+            $type = $order->type == 1 ? 'Regular' : 'Express';
+            array_push($cols, $i, $date, $order->orderId, $order->name, $type, $order->total_charge );
+            array_push($rows, $cols);
+            $i++;
+        }
+        return new Collection($rows);
+    }
+
+
+    public function headings(): array
+    {
+        return [
+            '#',
+            'Date',
+            'Order ID',
+            'User Name',
+            'Order Type',
+            'Total Charge',
+        ];
+    }
+}
+
+===================================================================================
+
+//import 
+
+//input
+
+
+                    <input type="file" class="custom-file-input" id="customFile"  accept=".xlsx, .xls, .csv">
+
+use App\Imports\OrderImport;
+
+    public function bulkUpload(Request $r){
+
+    	// dd($r->all());
+
+	    $validated = $r->validate([
+			'bulk_file'      => 'required',
+	    ],[
+			'bulk_file.required'     => 'File is required',
+	    ]);
+
+	    $extensions = array("xls","xlsx","xlm","xla","xlc","xlt","xlw");
+
+		$result = array($r->file('bulk_file')->getClientOriginalExtension());
+
+		if(in_array($result[0],$extensions) == false){
+			session()->flash('file_type_error', 'File extensions must be xls, xlsx');
+			return redirect()->back();
+		}
+
+		$import = Excel::import(new OrderImport, $r->file('bulk_file'), \Maatwebsite\Excel\Excel::XLSX );
+
+		
+	    session()->flash('Success', 'Bulk orders uploaded successfully');
+	    return view('frontend.bulk', compact('total_charge', 'name', 'email', 'phone', 'payment_methods'));
+
+
+	}
+
+
+//orderImport 
+
+<?php
+
+namespace App\Imports;
+
+use App\Models\Order;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+
+
+use Maatwebsite\Excel\Imports\HeadingRowFormatter;
+
+use Auth;
+
+HeadingRowFormatter::default('none');
+
+class OrderImport implements ToCollection, WithHeadingRow
+{
+    public function collection(Collection $rows)
+    {
+         Validator::make($rows->toArray(), [
+             '*.Type'             => 'required|numeric|min:1|max:2',
+             '*.Product Name'     => 'required',
+             '*.Unit'             => 'required',
+             '*.Unit Amount'      => 'required|numeric',
+             '*.Reciever Name'    => 'required',
+             '*.Reciever Mobile'  => 'required',
+             '*.Pickup Address'   => 'required',
+             '*.Delivery Address' => 'required',
+             '*.Unit Price'       => 'required|numeric',
+             '*.Total Price'       => 'required|numeric',
+         ],[
+
+            // '*.Type.required' => 'Type field is required',
+            // '*.Type.numeric' => 'Type field should be numeric',
+            // '*.Type.min' => 'Type field should value should be between 1 & 2',
+            // '*.Type.max' => 'Type field should value should be between 1 & 2',            
+            // '*.Product Name.required' => 'Product name field is required',
+            // '*.Unit.required' => 'Unit field is required',
+            // '*.Unit Amount.required' => 'Unit Amount field is required',
+            // '*.Unit Amount.numeric' => 'Unit Amount field should be numeric',
+            // '*.Reciever Name.required' => 'Reciever Name field is required',
+            // '*.Unit.required' => 'Unit field is required',
+            // '*.Unit.required' => 'Unit field is required',
+            // '*.Unit.required' => 'Unit field is required',
+
+         ])->validate();
+
+
+        if( Order::orderBy('id', 'desc')->first() != null && Order::orderBy('id', 'desc')->first()->bulk_id != null ){
+            $bulkId = Order::orderBy('id', 'desc')->first()->bulk_id + 1;
+        }else{
+            $bulkId = 100;
+        }
+
+
+        foreach ($rows as $row) {
+
+            $order = new Order; 
+
+            $order->bulk_id = $bulkId;
+
+            // setting order id
+            if( Order::count() > 0 && Order::orderBy('id', 'desc')->first()->invoice_no != null ){
+                $order->invoice_no = Order::orderBy('id', 'desc')->first()->invoice_no + 1;
+            }else{
+                $order->invoice_no = 1000;
+            }
+
+            if (Auth::check()) {
+                $order->user_id = Auth::user()->id;
+            }
+
+             $order->type = $row['Type'];
+             $order->name = request()->name;
+             $order->email = request()->email;
+             $order->phone = request()->phone;
+
+             $order->product_name     = $row['Product Name'];
+             $order->unit             = $row['Unit'];
+             $order->unit_amount      = $row['Unit Amount'];
+             $order->reciever_name    = $row['Reciever Name'];
+             $order->reciever_mobile  = $row['Reciever Mobile'];
+             $order->pickup_address   = $row['Pickup Address'];
+             $order->delivery_address = $row['Delivery Address'];
+             $order->pickup_date      = request()->pickup_date;
+
+
+            if( $row['Type'] == 2 ){
+               $order->total_charge     =  50;
+            }else{
+                if( Auth::check() && Auth::user()->delivery_charge != null && Auth::user()->delivery_charge > 0 ){
+                    $order->total_charge = Auth::user()->delivery_charge;
+                }else{
+                    $order->total_charge     =  30;
+                }
+            }
+
+             
+             $order->payment_methods  = request()->payment_method;
+             $order->unit_price       = $row['Unit Price'];
+             $order->total_price      = $row['Total Price'];
+
+             $order->save();
+        }
+    }
+}
+
+//frontend error show
+
+
+                  @if (session()->has('file_type_error'))
+                    <div class="text-danger">{{ session()->get('file_type_error') }}</div>
+                  @endif
+
+                  @if($errors->any())
+  
+                    @foreach ($errors->all() as $key => $error)  
+                      <div class="text-danger">
+                      @php
+                        $errorMsgWords = explode(' ',$error);
+                        $sentence = '';
+                        // dd($errorMsgWords[1]);
+                        if ($errorMsgWords[1] != "selected") {
+                          $secondWordArray = explode('.', $errorMsgWords[1]);
+                          
+                          $row = $secondWordArray[0] + 2;
+                          $field = $secondWordArray[1];
+
+                          $sentence .= 'Error at row ' . $row . ' - ';
+                          foreach ($errorMsgWords as $key => $errorMsgWord) {
+                            if($key == 1){
+                              $sentence .= $field . ' ';
+                              continue;
+                            }
+                            $sentence .= $errorMsgWord;
+                            $sentence .= ' ';
+                          }
+                        }else{
+                          $secondWordArray = explode('.', $errorMsgWords[2]);
+                          
+                          $row = $secondWordArray[0] + 2;
+                          $field = $secondWordArray[1];
+
+                          $sentence .= 'Error at row ' . $row . ' -';
+                          foreach ($errorMsgWords as $key => $errorMsgWord) {
+                            if($key == 2){
+                              // dd($errorMsgWord);
+                              $sentence .= $field;
+                              $sentence .= ' ';
+                              continue;
+                            }
+                            $sentence .= $errorMsgWord;
+                            $sentence .= ' ';
+                          }
+
+                        }
+                        echo $sentence;
+                      @endphp
+                      </div>
+                    @endforeach
+                  @endif

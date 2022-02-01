@@ -1,0 +1,3 @@
+https://github.com/barryvdh/laravel-dompdf/issues/303
+
+'isRemoteEnabled' => true

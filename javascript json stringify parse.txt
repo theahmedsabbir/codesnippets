@@ -1,0 +1,9 @@
+var student = {
+    name: "Rahim",
+    age: 26,
+    hometown: "Dhaka"
+};
+
+var student_json = JSON.stringify(student);
+
+var student_new = JSON.parse(student_json);

@@ -1,0 +1,51 @@
+https://www.addthis.com/
+
+//posts with meta tags or images
+https://stackoverflow.com/questions/29366734/show-shared-image-as-thumbnail-in-facebook-sharing-in-laravel
+https://developers.facebook.com/docs/sharing/webmasters#markup
+
+//tutorial
+https://www.youtube.com/watch?v=5gl0MEY8xEI
+
+
+
+//for facebook // add this to header 
+
+
+@section('css')
+    <meta property="og:url"                content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html" />
+    <meta property="og:type"               content="article" />
+    <meta property="og:title"              content="When Great Minds Don’t Think Alike" />
+    <meta property="og:description"        content="How much does culture influence creative thinking?" />
+    <meta property="og:image"              content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
+@endsection
+
+//use in laravel like this 
+
+@section('meta')
+
+    <meta property="og:url"          content="{{ Request::url() }}" />
+    <meta property="og:type"         content="article" />
+    <meta property="og:title"        content="{{ $product->name }}" />
+    <meta property="og:description"  content="{{ $product->width }}/{{ $product->length }}{{ $product->rim_category }}{{ $product->rim_size }} {{ $product->load_index }}{{ $product->speed_index }}" />
+
+    @if ($product->pattern && $product->pattern->tyreImages->count() > 0)
+        @php
+            $tyreImage  = $product->pattern->tyreImages[0];
+        @endphp
+        <meta property="og:image"   content="{{ asset('pattern/400/' . $tyreImage->image ) }}" />
+        <meta property="og:image:secure_url" content="{{ asset('pattern/400/' . $tyreImage->image ) }}" />
+        <meta property="og:image:width" content="400" /> 
+        <meta property="og:image:height" content="400" />
+    @endif
+@endsection
+
+
+//facebook delete cache 
+//scrape data
+
+https://wecreate.digital/blog/clear-facebook-open-graph-cache/#:~:text=The%20best%20way%20to%20clear,share%20a%20link%20on%20Facebook.
+
+https://developers.facebook.com/tools/debug/
+
+https://developers.facebook.com/tools/debug/?q=https%3A%2F%2Ftyreguru.emicon.tech%2Fproduct-details%2Fpirelli-20540-r18-86w-xl-run-flat-cinturato-p7-t

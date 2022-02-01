@@ -1,0 +1,16 @@
+//dont use public_path
+        if( isset($data['image']) ){
+            $image = $data['image'];
+            $imageName = time().'_'.'.'. $image->extension();
+            $image->move( public_path('frontend/images/users'), $imageName );
+            $user->image = $imageName;
+        }
+
+
+
+        if (isset($request->image)) { 
+            $image = $request->image;
+            $imageName = 'banner_' . time().'_'.'.'. $image->extension();
+            $image->move('fontend/assets/img', $imageName );
+            $settings->image = $imageName;
+        }

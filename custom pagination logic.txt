@@ -1,0 +1,62 @@
+
+// previous 
+htmlPagination += '<li class="page-item">';
+	htmlPagination += '<a class="page-link" onclick="filter(';
+
+
+	previous_page  = data.current_page - 1;
+
+	if(previous_page <= 1){
+		previous_page = 1;
+	}
+
+	htmlPagination += previous_page;
+
+	htmlPagination += ')" aria-label="Previous">';
+		htmlPagination += '<span aria-hidden="true">';
+			htmlPagination += '<i class="fa fa-chevron-left" aria-hidden="true"></i>';
+		htmlPagination += '</span> ';
+		htmlPagination += '<span class="sr-only">Previous</span>';
+	htmlPagination += '</a>';
+htmlPagination += '</li>';
+
+// middle pages
+var j = 0;
+for (var page = data.current_page - 2; page <= data.last_page; page++) {	
+	if( page <= 0){
+		continue;
+	}
+
+	htmlPagination += '<li class="page-item ';
+	if ( page == data.current_page ) {
+		htmlPagination += 'active';
+	}
+	htmlPagination += '"><a class="page-link" onclick="filter('+page+')">';
+	htmlPagination += page;
+	htmlPagination += '</a></li>';
+
+	j++;
+	if (j == 5) {
+		break;
+	}
+}
+
+//next
+htmlPagination += '<li class="page-item">';
+	htmlPagination += '<a class="page-link" onclick="filter(';
+
+	next_page  = data.current_page + 1;
+
+	if(next_page >= data.last_page){
+		next_page = data.last_page;
+	}
+
+	htmlPagination += next_page;
+
+	htmlPagination += ')" aria-label="Next">';
+		htmlPagination += '<span aria-hidden="true">';
+			htmlPagination += '<i class="fa fa-chevron-right" aria-hidden="true"></i>';
+		htmlPagination += '</span> ';
+		htmlPagination += '<span class="sr-only">Next</span>';
+	htmlPagination += '</a>';
+htmlPagination += '</li>';

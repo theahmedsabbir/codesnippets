@@ -1,0 +1,18 @@
+https://stackoverflow.com/questions/58065765/eslint-jest-globals-environment-key-unknown
+
+
+npm i --save-dev eslint-plugin-jest
+
+
+
+---
+
+
+//try
+npm update eslint
+
+--
+
+
+Update Package.json(Remove "react-app/jest" from extends array
+https://stackoverflow.com/questions/67343817/how-to-solve-this-error-package-json-eslint-config-react-app-jestoverrides0

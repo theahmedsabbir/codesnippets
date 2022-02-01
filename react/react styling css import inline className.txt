@@ -1,0 +1,47 @@
+https://drive.google.com/file/d/1xZ-iFV5-bXE3Mv_uKsjKfDqQFIXhilLA/view?usp=sharing
+
+
+//import css
+
+
+import React from 'react';
+import '../stylesheets/book.css' //import css
+
+const Book = props => {
+    return (
+        <div className="book">
+            <input type="text" value={props.bookName} onChange={props.updateBookName} />
+            <h3 onClick={props.change}>Book: {props.bookName}</h3>
+            <h4>Writer: {props.writer}</h4>
+        </div>
+
+    );
+}
+
+export default Book;
+
+
+
+
+
+
+//inline css
+  render() {
+    // inline css define
+    const style = {
+      background: 'blue',
+      color: 'white',
+      padding: '10px'
+    };
+    return (
+      <div className="App">
+        {/* inline css here */}
+        <h1 style={style}>Book List</h1>
+
+        <input type="text" onChange={this.changeBookNameWithThisInput} />
+
+        <Book
+          bookName={this.state.books[0].bookName}
+          writer={this.state.books[0].writer}
+          updateBookName={this.changeBookNameWithThisInput}
+        />

@@ -1,0 +1,2 @@
+https://stackoverflow.com/questions/43478670/how-to-paginate-a-collection-after-get-in-laravel
+

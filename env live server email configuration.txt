@@ -1,0 +1,7 @@
+
+MAIL_MAILER=smtp
+MAIL_HOST=mail.onedaydelivery.ae
+MAIL_PORT=465
+MAIL_USERNAME=info@onedaydelivery.ae
+MAIL_PASSWORD=~QePN;w{R-)z
+MAIL_ENCRYPTION=SSL

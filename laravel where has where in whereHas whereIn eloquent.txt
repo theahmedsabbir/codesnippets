@@ -1,0 +1,4 @@
+
+    		$productQuery->whereHas('pattern', function($pattern) use($brandIds){
+    			$pattern->whereIn('brand_id', $brandIds);
+    		});

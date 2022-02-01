@@ -1,0 +1,83 @@
+
+
+https://drive.google.com/file/d/1aJosr1HGx-SluU8yiptylW26m7SkKfi-/view?usp=sharing
+
+
+import DISHES from '../data/dishes';
+import COMMENTS from '../data/comments';
+import { combineReducers } from 'redux';
+
+const dishReducer = (dishState = DISHES, action) => {
+    return dishState;
+}
+
+const commentReducer = (commentState = COMMENTS, action) => {
+    if (action.type === 'ADD_COMMENT') {
+        let comment = action.payload;
+        comment.id = commentState.length;
+        comment.date = new Date().toDateString();
+        console.log(comment);
+        return commentState.concat(comment);
+    }
+    return commentState;
+}
+
+export const Reducer = combineReducers({
+    dishes: dishReducer,
+    comments: commentReducer
+});
+
+
+====
+https://drive.google.com/file/d/1aMFYoCRfV0V0iVbflY_FCnJyc7duSNv3/view?usp=sharing
+https://drive.google.com/file/d/1aMFYoCRfV0V0iVbflY_FCnJyc7duSNv3/view?usp=sharing
+//switch reducer type from a default file
+
+
+import * as actionTypes from './actionTypes';
+
+
+
+const dishReducer = (dishState = DISHES, action) => {
+
+    switch (action.type) {
+
+        default:
+
+            return dishState;
+
+    }
+
+}
+
+
+
+const commentReducer = (commentState = COMMENTS, action) => {
+
+    switch (action.type) {
+
+        case actionTypes.ADD_COMMENT:
+
+            let comment = action.payload;
+
+            comment.id = commentState.length;
+
+            comment.date = new Date().toDateString();
+
+            console.log(comment);
+
+            return commentState.concat(comment);
+
+        default:
+
+            return commentState;
+
+    }
+
+
+
+
+
+}
+
+

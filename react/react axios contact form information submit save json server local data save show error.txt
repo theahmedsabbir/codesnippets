@@ -1,0 +1,17 @@
+
+
+        // json file e post koro 
+        axios.post('http://localhost:3001/contacts', contact_info)
+            .then(response => response.status)
+            .then(status => {
+                if (status === 201) {
+                    this.setState({
+                        success_message: "Thank you for everything",
+                    });
+                }
+            })
+            .catch(error => {
+                this.setState({
+                    alert_message: error.message
+                });
+            });

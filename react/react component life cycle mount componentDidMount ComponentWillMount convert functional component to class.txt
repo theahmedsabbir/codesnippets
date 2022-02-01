@@ -1,0 +1,20 @@
+https://drive.google.com/file/d/15OCGIKKa7z8ZGr451xIdt_9cc9C40NpO/view?usp=sharing
+https://drive.google.com/file/d/15OCGIKKa7z8ZGr451xIdt_9cc9C40NpO/view?usp=sharing
+
+class Menu extends Component {
+
+    constructor() {
+        console.log("MenuComponent constructor!");
+        super();
+    }
+
+    UNSAFE_componentWillMount() {
+        console.log("MenuComponent componentWillMount!");
+    }
+
+    componentDidMount() {
+        console.log("MainComponent componentDidMount!");
+    }
+
+    render() {
+        console.log("MainCompoent render");

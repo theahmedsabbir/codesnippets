@@ -1,0 +1,181 @@
+https://drive.google.com/file/d/1-Bju0pJyfcVgc_3P8qUTc4LyVUYFkTCe/view?usp=sharing
+https://github.com/theahmedsabbir/bohubrihi_mern
+(branch project_task_list)
+
+document.querySelector('#add_task').addEventListener('click', storeTask);
+
+// get data when dom is loaded
+document.addEventListener('DOMContentLoaded', showTasksFromLocalStorage)
+
+function showTasksFromLocalStorage(){
+    tasks = getTasksFromLocalStorage();
+
+    tasks.forEach(function (task,index) {
+        li_data = task;
+
+        // create and append in dom
+        var li = document.createElement("LI");  
+        li.innerHTML = li_data + ' <a key="value">X</a>'; 
+
+        li.setAttribute("data", li_data);
+
+        document.getElementById("tasks").appendChild(li); 
+
+    });
+}
+
+function getTasksFromLocalStorage(){
+    
+    if (localStorage.getItem('tasks') == null) {
+        tasks = [];
+    }else{
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+
+    return tasks;
+}
+
+// store task
+function storeTask() {
+    let li_data = document.querySelector('#new_task').value;
+
+    // store in local storage
+    tasks = getTasksFromLocalStorage();
+
+    tasks.push(li_data);
+
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+
+    // create and append in dom
+    var li = document.createElement("LI");  
+    li.innerHTML = li_data + ' <a key="value">X</a>'; 
+
+    li.setAttribute("data", li_data);
+
+    document.getElementById("tasks").appendChild(li);
+}
+
+
+// filter
+document.querySelector('#task_filter').addEventListener('input', function(){
+    filter = document.querySelector('#task_filter').value;
+    tasks = document.querySelectorAll('#tasks li');
+
+    tasks.forEach(function(task, key){
+        if (filter != '' && task.getAttribute('data') != filter) {
+            task.style.display = 'none';
+        }else{
+            task.style.display = '';
+        }
+    });
+});
+// 
+
+// remove item
+
+document.querySelector('ul').addEventListener('click', removeItem);
+
+function removeItem(e) {
+    if (e.target.hasAttribute('key')) {
+
+        // get tasks and remove and reattach in localStorage
+        tasks = getTasksFromLocalStorage();
+
+        console.log(tasks);
+
+        tasks.forEach(function(task, i) {
+            li_item = e.target.parentElement.getAttribute('data');
+
+            if (task == li_item) {
+                tasks.splice(i, 1);
+            }
+        });
+
+
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        
+        // now remove from display
+        e.target.parentElement.remove();
+    }
+    // link.parentNode.remove()
+}
+
+// remove item all
+
+document.querySelector('#clear_task_btn').addEventListener('click', removeItemAll);
+
+function removeItemAll(e) {
+
+    // remove from localstorage
+    localStorage.removeItem('tasks');
+    // localStorage.clear();
+
+
+    // remove from display
+    ul = e.target.previousElementSibling;
+    if (ul.getAttribute('id') == 'tasks') {
+        ul.innerHTML = '';
+    }
+    // link.parentNode.remove()
+}
+
+// filter
+document.querySelector('#task_filter').addEventListener('input', function(){
+    filter = document.querySelector('#task_filter').value;
+    tasks = document.querySelectorAll('#tasks li');
+
+    tasks.forEach(function(task, key){
+        if (filter != '' && task.getAttribute('data') != filter) {
+            task.style.display = 'none';
+        }else{
+            task.style.display = '';
+        }
+    });
+});
+
+
+// remove item
+
+document.querySelector('ul').addEventListener('click', removeItem);
+
+function removeItem(e) {
+    if (e.target.hasAttribute('key')) {
+
+        // get tasks and remove and reattach in localStorage
+        tasks = getTasksFromLocalStorage();
+
+        console.log(tasks);
+
+        tasks.forEach(function(task, i) {
+            li_item = e.target.parentElement.getAttribute('data');
+
+            if (task == li_item) {
+                tasks.splice(i, 1);
+            }
+        });
+
+
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        
+        // now remove from display
+        e.target.parentElement.remove();
+    }
+    // link.parentNode.remove()
+}
+
+// remove item all
+
+document.querySelector('#clear_task_btn').addEventListener('click', removeItemAll);
+
+function removeItemAll(e) {
+
+    // remove from localstorage
+    localStorage.removeItem('tasks');
+
+    // remove from display
+    ul = e.target.previousElementSibling;
+    if (ul.getAttribute('id') == 'tasks') {
+        ul.innerHTML = '';
+    }
+    // link.parentNode.remove()
+}

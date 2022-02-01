@@ -1,0 +1,7 @@
+//by props
+https://drive.google.com/file/d/175ZlC6rMqbkhuSoU4eER6U4OBiHdoD3P/view?usp=sharing
+
+//by state 
+https://drive.google.com/file/d/18nBKRMsrrmH136ixOCu8ip4eBzHogtF0/view?usp=sharing
+
+//getDerivedStateFromProps getSnapshotBeforeUpdate

@@ -1,0 +1,76 @@
+//jquery window boot 
+
+
+        $(window).bind("load", function() {
+            myFunction();
+        });
+
+
+//calling a axios request 
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+<script type="text/javascript">
+  function checkPromo(){
+    // console.log(document.getElementById('promo_code').value);
+    var code  = document.getElementById('promo_code').value
+    axios.get('/promo-codes/get/' + code)
+    .then(response=>{
+      console.log(response.data)
+      // document.getElementById('promo_feedback').
+
+    }).catch(error=>{
+      console.log(error)
+    })
+
+  }
+</script>
+
+
+
+
+// ajax get 
+
+
+
+        function myFunction(page) {
+
+            var cat = [];
+            $("input:checkbox[name=cat]:checked").each(function(){
+                cat.push($(this).val());
+            });
+
+
+            console.log(search);
+
+            $.ajax({
+                url: "{{ url('/searchData') }}/",
+                data:{search:search , category:cat, minimum:min, maximum:max, subCategory:sub, manufacturer:man, condition:cond, brand:br, page: page},
+                type: "GET",
+                success: function (data) {
+                    $('#preloader').hide();
+                    // console.log(data);
+                }
+            });
+        }
+
+
+
+
+//ajax post 
+
+
+        $.ajax({
+            url: "{{ url('cart/update') }}/",
+            data:{ 
+        	"_token": "{{ csrf_token() }}",
+             cart_id:cart_id,
+             quantity:quantity,
+            },
+            type: "POST",
+            success: function (response) {
+
+                console.log(response);
+            }
+        });

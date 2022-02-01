@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<body>
+
+
+<style>
+	.translated-ltr{margin-top:-40px;}
+	.translated-ltr{margin-top:-40px;}
+	.goog-te-banner-frame {display: none;margin-top:-20px;}
+
+	.goog-logo-link {
+	   display:none !important;
+	} 
+
+	.goog-te-gadget{
+	   color: transparent !important;
+	}
+
+</style>
+
+<h1>My Web Page</h1>
+
+<p>Hello everybody!</p>
+
+<p>Translate this page:</p>
+
+<div id="google_translate_element"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<p>You can translate the content of this page by selecting a language in the select box.</p>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======================
+
+
+
+
+
+
+
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'sv,en',
+    }, 'google_translate_element');
+      console.log('google translate loaded');
+    }
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+============================
+
+
+
+
+
+
+
+
+
+
+
+
+        function removeLocations(){
+            $.each( $(".goog-te-combo option"), function( key, option ) {
+                language = option.value;
+              if(language!='' && language!='en' && language!='ar' && language!='es' && language!='fr'){
+                    option.remove();
+                }
+            });
+        }
+
+        let stateCheck = setInterval(() => {
+          if (document.readyState === 'complete') {
+            clearInterval(stateCheck);
+            removeLocations();
+          }
+        }, 100);
+
+
+        $( ".goog-te-combo" ).change(function() {
+            console.log('hello');
+            console.log(document.readyState);
+            removeLocations();
+        });

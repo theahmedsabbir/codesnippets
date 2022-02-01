@@ -1,0 +1,37 @@
+
+    componentDidMount() {
+        this.props.showDishes();
+    }
+
+
+
+// map dispatch to props
+const mapDispatchToProps = dispatch => {
+    return {
+        addComment: (dish_id, rating, comment, author, date) => dispatch({
+            type: 'ADD_COMMENT',
+            payload: {
+                rating: rating,
+                comment: comment,
+                author: author,
+                date: date,
+            },
+            dish_id: dish_id,
+        }),
+        showDishes: () => {
+            axios.get(baseUrl + '/dishes')
+                .then(response => response.data)
+                .then((dishes) => {
+
+                    dispatch({
+                        type: 'SHOW_DISHES',
+                        payload: {
+                            dishes: dishes
+                        },
+                    })
+
+                });
+        },
+    }
+
+}

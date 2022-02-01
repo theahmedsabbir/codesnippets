@@ -1,0 +1,31 @@
+https://stackoverflow.com/questions/61184193/laravel-find-exact-match-case-sensitive
+
+use DB;
+...
+public function search(){
+    if ($search = \Request::get('q')) {
+        $patrons = Patron::where(function($query) use ($search){
+            $query->whereRaw("BINARY `barcode` = '$search'");
+            // or
+            // $query->where(DB::raw("BINARY `barcode`), $search);
+        })->paginate(20);
+    }else{
+        $patrons = Patron::latest()->paginate(5);
+    }
+
+    return $patrons;
+}
+
+
+
+
+use DB;
+...
+public function search(){
+    if ($search = \Request::get('q')) {
+        $patrons = Patron::where(DB::raw("BINARY `barcode`"), $search)->paginate(20);
+    }else{
+        $patrons = Patron::latest()->paginate(5);
+    }
+
+    return $patrons;

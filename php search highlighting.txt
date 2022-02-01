@@ -1,0 +1,14 @@
+
+
+                    $name  = $row->name;
+                    $search_name_index = stripos($name, $search);
+
+                    if($search_name_index !== false){
+                        $searchLength = strlen($search);
+                        // dd($searchLength);
+                        $search_last_index = $search_name_index + $searchLength;
+
+                        // return $search_name_index;
+                        $name = substr_replace($name, '</strong>', $search_last_index, 0);
+                        $name = substr_replace($name, '<strong style="background:yellow">', $search_name_index,0);
+                    }

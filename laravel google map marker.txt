@@ -1,0 +1,249 @@
+https://github.com/dhamkith/googlemap-in-laravel
+https://www.youtube.com/watch?v=lNIKABqLiaE
+http://kml4earth.appspot.com/icons.html
+
+
+
+//simplified code 
+    
+    var mapElement = document.getElementById('map');
+   	var url = '{{ url('/api/map-marker') }}';
+
+   	// initialize
+    markerscodes(); 
+
+
+   	// getting database value
+    async function markerscodes() {
+        var data = await axios(url);
+        var lacationData = data.data; 
+        
+        //map options
+        var options = {
+            center: { lat:23.863207564094196, lng: 90.38538845470627 }, 
+            // center: { lat:Number(datas[0].coords_lat), lng:  Number(datas[0].coords_lng) },
+            zoom: 15
+        } 
+
+        // Create a map object and specify the DOM element for display.
+        var map = new google.maps.Map(mapElement, options );
+
+        // set marker
+        googleMapsMarker = new google.maps.Marker({
+                position: { lat:23.863207564094196, lng: 90.38538845470627 }, 
+                map:map,
+                animation:google.maps.Animation.DROP,
+    	});
+
+        // set icon
+        googleMapsMarker.setIcon('{{ asset('icon0.png') }}');
+
+
+        // custom content
+        var infowindow = new google.maps.InfoWindow({
+                content: '<a href="#">hello</a>'
+        });
+
+        googleMapsMarker.addListener('click', function() {
+            infowindow.open(map, googleMapsMarker);
+        });
+
+    }
+
+
+
+
+
+
+
+//web.php
+
+
+
+Route::get('/api/map-marker', 'Api\ApiRestaurantController@mapMarker');
+Route::get('map', 'HomeController@map');
+
+// Api/ApiRestaurantController
+
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+use App\Location;
+
+class ApiRestaurantController extends Controller
+{
+ 
+  
+    /**
+     * get save locations data from database
+     * 
+     */
+    public function mapMarker()
+    { 
+        $locations = Location::all();
+        $map_markes = array ();
+        foreach ($locations as $key => $location) { 
+            $map_markes[] = (object)array(
+                'location_title' => $location->location_title,
+                'coords_lat' => $location->coords_lat,
+                'coords_lng' => $location->coords_lng,
+                'number' => $location->number,
+                'location_email' => $location->location_email,
+                'addressline1' => $location->addressline1,
+                'addressline2' => $location->addressline2,
+                'city' => $location->city,
+                'country' => $location->country,
+            );
+        }
+
+        // dd($map_markes);
+        return response()->json($map_markes);
+    }
+ 
+
+}
+
+
+//controller 
+
+    public function map(){
+
+
+        return view('map');
+    }
+
+//maps.blade.php
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+
+
+
+<style type="text/css">
+	#map{
+		width: 50%;
+		text-align: center;
+		margin:  0 auto;
+		height: 50vh;
+	}
+</style>
+
+
+
+
+
+
+
+
+
+	<div id="map"></div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+// function initMap() {
+    
+    var mapElement = document.getElementById('map');
+   	var url = '{{ url('/api/map-marker') }}';
+
+    async function markerscodes() {
+        var data = await axios(url);
+        var lacationData = data.data; 
+        mapDisplay(lacationData);
+    }
+    markerscodes(); 
+
+    function mapDisplay(datas) {
+
+        //map options
+        var options = {
+            //center: { lat:6.9586, lng: 79.9662 }, //Heiyanthuduwa
+            // center: { lat: 6.9333296, lng: 79.9833294 }, Biygama
+            center: { lat:Number(datas[0].coords_lat), lng:  Number(datas[0].coords_lng) },
+            zoom: 15
+        } 
+        // Create a map object and specify the DOM element for display.
+        var map = new google.maps.Map(mapElement, options );
+
+    
+        var markers = new Array();
+
+            for (let index = 0; index < datas.length; index++) {
+                markers.push({ 
+                    coords: { lat: Number(datas[index].coords_lat), lng:  Number(datas[index].coords_lng) },
+                    //iconImage:'https://maps.google.com/mapfiles/kml/shapes/',
+                    content: `<div><h5>${datas[index].location_title}</h5><p><i class="icon address-icon"></i>${datas[index].addressline1}</p><p>${datas[index].addressline2}, ${datas[index].city}</p><small>${datas[index].location_email}</small></div>`
+                })
+            }
+
+            //loop through marker
+            for ( var i = 0; i < markers.length; i++ ){
+                addMarker(markers[i]);
+            } 
+    
+        //addMarker();
+        function addMarker(props){
+            var marker = new google.maps.Marker({
+                position: props.coords, 
+                map:map
+            });
+        	console.log(props);
+
+            if(props.iconImage){
+                marker.setIcon(props.iconImage);
+            }
+
+            if(props.content){
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: props.content
+                });
+
+                marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+                });
+
+            }
+        }
+        
+            
+    };
+
+// } //initMap end
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyBWONYJglFPciyAY5_VZyTqRKjqYkmWhE8"></script>
+</body>
+</html>
+
+
+
+
+
+
+//query latitude and logitude from given distance
+
+
+            $latitude = -27.41577759694002;
+            $longitude = 153.08261188667555;
+            $nearbyInstallers          =       DB::table("installers");
+
+            $nearbyInstallers          =       $nearbyInstallers->select("*", DB::raw("6371 * acos(cos(radians(" . $latitude . "))
+                                    * cos(radians(latitude)) * cos(radians(longitude) - radians(" . $longitude . "))
+                                    + sin(radians(" .$latitude. ")) * sin(radians(latitude))) AS distance"));
+            $nearbyInstallers          =       $nearbyInstallers->having('distance', '<', 100);
+            $nearbyInstallers          =       $nearbyInstallers->orderBy('distance', 'asc');
+
+            $nearbyInstallers          =       $nearbyInstallers->get();

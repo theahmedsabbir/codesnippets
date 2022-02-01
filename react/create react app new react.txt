@@ -1,0 +1,9 @@
+https://nodejs.org/en/
+
+npm install create-react-app -g 
+npm root -g 
+
+//create new folder 
+create-react-app hello-world
+
+https://reactjs.org/docs/create-a-new-react-app.html

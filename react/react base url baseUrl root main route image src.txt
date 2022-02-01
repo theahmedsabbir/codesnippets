@@ -1,0 +1,19 @@
+import { baseUrl } from "../../redux/baseUrl";
+
+
+axios.get(baseUrl + '/dishes')
+
+
+//baseUrl.js
+
+export const baseUrl = 'http://localhost:3001'
+
+//for image 
+<CardImg
+                alt={props.selectedItem.name}
+                src={baseUrl + '/' + props.selectedItem.image}
+                top
+                width="100%"
+            />
+
+

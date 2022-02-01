@@ -1,0 +1,71 @@
+//imgur screenshot
+https://i.imgur.com/mw1avNv.png
+https://i.imgur.com/A2uE0p5.png
+
+//values
+Type	
+Host
+
+Value
+
+TTL
+
+A Record	
+@
+
+108.170.56.243
+
+Automatic
+
+Remove
+CNAME Record	
+www
+
+wish-bd.com.
+
+Automatic
+
+Remove
+
+
+==
+
+
+for shared domain 
+
+
+Type	
+Host
+
+Value
+
+TTL
+
+A Record	
+@
+
+108.170.56.242
+
+Automatic
+
+Remove
+
+
+www
+texmaxgroup.com.
+
+Save ChangesCancel
+TXT Record	
+@
+
+v=spf1 +ip4:108.170.56.242 +include:spf.efwd.registrar-servers.com ~all
+
+60 min
+
+Remove
+TXT Record	
+default._domainkey
+
+v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyrN+1lK2DG/DvCyxtkhyPvY++b5mofUdWnR5APvCzNJUELjslBNTEPvnMEtfJY/elZeZwneCnA5sLPN8Mc7D1gyzVs7m8UE6hIOcWyINWL3KAVAgmVGg3w7fHQ7O/AnwNciVsw5AspEudyrXQHS81tCeB3x0pJkG6SK+28GZbitJGlwUHdwZQ6NyFAdb07XQMgeTVU7BlOKqNA4NTrXtxFfMsGKXvdXqVk6umnr3jUOT55DGjxMNC1fDzP9PRVM1hsKzk1t0VqSx0Y52UYwrmv3mlk1OoajBqFpfXdCTbff1h4NAnqnJOabMmbXSZZOeCYDDNVTaRZjZQjYGPctKLwIDAQAB;
+
+60 min

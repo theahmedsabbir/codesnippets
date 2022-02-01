@@ -1,0 +1,13 @@
+
+
+https://www.youtube.com/watch?v=bj7XvNaYA5U
+https://docs.cpanel.net/knowledge-base/web-services/guide-to-git-deployment/
+
+
+.cpanel.yml 
+
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/cttedu/public_html/
+    - /bin/cp -R . $DEPLOYPATH

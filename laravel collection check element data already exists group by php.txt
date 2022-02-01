@@ -1,0 +1,17 @@
+
+                  	// get all the tyre sizes in database                   	
+                    $products = App\Models\Product::orderBy('id', 'asc')->get();
+                    $product_sizes = collect();
+                    foreach ($products as $key => $product) {
+                    	//jodi ei product size alreay exist na kore then add this list into collection
+                    	$this_size_exists = $product_sizes->where('width', $product->width)->where('length', $product->length)->where('rim_category', $product->rim_category)->where('rim_size', $product->rim_size);
+
+                    	if ($this_size_exists->count() == 0) {
+	                    	$this_product_size = collect();
+	                    	$this_product_size->put('width',$product->width);
+	                    	$this_product_size->put('length',$product->length);
+	                    	$this_product_size->put('rim_category',$product->rim_category);
+	                    	$this_product_size->put('rim_size',$product->rim_size);
+	                    	$product_sizes->push($this_product_size);                    		
+                    	}
+                    }

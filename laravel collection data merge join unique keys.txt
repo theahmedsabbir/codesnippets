@@ -1,0 +1,5 @@
+https://stackoverflow.com/questions/51534929/how-to-merge-two-collections-without-dropping-losing-keys-in-laravel-php-frame
+
+
+
+$data = $questions->toBase()->merge($answers);

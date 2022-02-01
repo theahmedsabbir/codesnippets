@@ -1,0 +1,30 @@
+import React from "react";
+import top from '../../assets/images/top.png';
+
+const Ingredient = (props) => {
+    console.log(props);
+
+    let ingredient = null;
+
+    switch (props.portion) {
+        case 'top':
+            ingredient = <div><img src={top} /></div>;
+            break;
+        case 'meat':
+            ingredient = <div><img src={top} /></div>;
+            break;
+        case 'bottom':
+            ingredient = <div><img src={top} /></div>;
+            break;
+        default:
+            ingredient = null;
+    }
+
+    return (
+        <div>
+            {ingredient}
+        </div>
+    );
+}
+
+export default Ingredient;

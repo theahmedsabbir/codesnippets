@@ -1,0 +1,72 @@
+https://drive.google.com/file/d/1aAfwaOiMtjx1AnAn6Uk8hs5QUgwZ9kot/view?usp=sharing
+
+
+//home.js
+
+import react, { Component } from "react";
+import { connect } from 'react-redux';
+
+
+const mapStateToProps = state => {
+
+    // console.log("mapStateToProps: ", state);
+
+    //** */ ekhane jeta return kortese sheta Home component er componentDidMount e props akare dhora jabe
+    return {
+        state: state,
+    }
+
+}
+
+
+class Home extends Component {
+
+    componentDidMount() {
+
+        // console.log("Home State: ", this.state);
+
+        //**ekhane prop akare render hocche
+        console.log("Home Props: ", this.props);
+        this.props.dispatch({
+            type: 'TEST',
+            data: "kichu bolbo na"
+        });
+
+    }
+
+    componentDidUpdate() {
+        console.log('home updated', this.props);
+    }
+
+    render() {
+        document.title = "Home";
+        return (
+            <div>
+
+            </div >
+        );
+    }
+}
+
+export default connect(mapStateToProps)(Home);
+
+
+//reducer.js
+
+import DISHES from "../data/dishes";
+
+const initialState = {
+    dishes: DISHES,
+    hello: "bolo",
+}
+
+export const Reducer = (state = initialState, action) => {
+    console.log('from reducer', action);
+    if (action.type === 'TEST') {
+        state = {
+            ...state,
+            hello: action.data
+        }
+    }
+    return state;
+}

@@ -1,0 +1,47 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Order Tax Invoice</title>
+	<style type="text/css">
+		.container{
+			width: 100%;
+		}
+		.content {
+		    width: 50%;
+		    margin: 0 auto;
+		    padding-left: 64px;
+		    padding-top: 20px;
+		    padding-bottom: 20px;
+		    font-size: large;
+		    font-family: math;
+		    text-align: justify;
+		}
+		h4{
+			padding-bottom: 10px;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	<div class="content">
+		<div class="img">		
+	        <img src="{{ asset('frontend/images/logo_email.png') }}" style=" width: 150px;">
+		</div>
+			
+	    <h4>Your order #{{ $order->invoice_no }} is successfully completed.</h4>
+	    <p>You may find your tax invoice in the attachment.</p>
+	    <p>Please check order status by clicking following link</p>
+	    <a href="{{ url('order/track') }}" target="_blank">
+	        {{ 'Order Status' }}
+	    </a>
+	    <p>You may provide feedback on your experience. It would be appreciated.</p>
+	    <br/>
+
+	    <p>Regards,</p>
+	    <p>Tyreguru!</p>
+	</div>
+</div>
+</body>
+@dd('yes')
+</html>

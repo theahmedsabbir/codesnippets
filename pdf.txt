@@ -1,0 +1,25 @@
+invoice template - https://gist.github.com/alfredoem/c7a6fbcba33c57948132
+https://packagist.org/packages/barryvdh/laravel-dompdf
+https://github.com/barryvdh/laravel-dompdf
+
+
+
+use PDF;
+--
+
+$data = Order::all();
+\PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('admin.report.soaPdf', compact('data'));
+return $pdf->download('invoice.pdf');
+
+
+
+==
+
+image not found error
+
+https://github.com/barryvdh/laravel-dompdf/issues/303
+
+'isRemoteEnabled' => true
+
+
+==

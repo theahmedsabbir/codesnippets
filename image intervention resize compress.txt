@@ -1,0 +1,21 @@
+use Image;
+
+
+
+    public function image(Request $r){
+    	// dd($r->file('image'));
+
+    	$image = $r->image;
+        $image_name = 'image' . time() . '.' . $image->getClientOriginalExtension();
+
+        $location = public_path( 'test/' . $image_name );
+
+        $img = Image::make( $image );
+
+		// resize the image to a width of 300 and constrain aspect ratio (auto height)
+		$img->resize(300, null, function ($constraint) {
+		    $constraint->aspectRatio();
+		});
+
+        $img->save( $location, 80 );
+    }

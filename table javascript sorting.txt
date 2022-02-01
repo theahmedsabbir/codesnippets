@@ -1,0 +1,113 @@
+
+**search box 
+
+<input type="text" id="searchInput" onkeyup="searchByNames()" class="form-control" placeholder="Search For Experts">
+
+    function searchByNames() {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("searchInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[3];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+
+
+
+**table select filter 
+
+
+<select id="select_filter" class="form-control" onclick="select(this.value)">
+	<option value="0">All</option>
+	<option value="1">Paid</option>
+	<option value="2">Unpaid</option>
+	<option value="3">Review</option>
+ 	<option value="4">One Last Question</option>
+</select>
+
+    // select filter 
+    function select(select_value){
+
+        var input, filter, table, tr, td, i, txtValue;
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        if(select_value==0){
+          // show all          
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[6];
+            if (td) {
+                tr[i].style.display = "";
+            }
+          }
+        }else if(select_value==1){
+          // paid filtering
+          filter = "Y";
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[6];
+            if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
+          }
+        }else if(select_value==2){
+          // unpaid filtering
+          filter = "N";
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[6];
+            if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
+          }
+        }else if(select_value==3){
+          // unpaid filtering
+          filter = "REVIEW";
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[4];
+            if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
+          }
+        }else if(select_value==4){
+          // unpaid filtering
+          filter = "ONE";
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[4];
+            if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
+          }
+        }
+    }

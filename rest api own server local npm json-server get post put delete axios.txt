@@ -1,0 +1,55 @@
+
+
+https://drive.google.com/file/d/1KC-0qYPiusP1NHbKvfhsXzVvaBYEwNJl/view?usp=sharing
+
+//create db.json //sample json file
+
+
+{
+    "dishes": [
+        {
+            "id": 0,
+            "name": "pizza",
+            "price": 999
+        },
+        {
+            "id": 1,
+            "name": "chicken balls",
+            "price": 25
+        }
+    ],
+    "comments": [],
+    "offers": []
+}
+
+==
+
+
+npm install json-server -g
+
+json-server db.json --watch -p 3001
+
+==
+
+//get post put delete axios 
+
+https://drive.google.com/file/d/1KE9ElnEno9SQeRb--zX3UH_-ElMJxVbl/view?usp=sharing
+
+import axios from 'axios';
+
+class App extends Component {
+  componentDidMount() {
+
+    // axios.get('http://localhost:3001/dishes')
+    //   .then(response => response.data)
+    //   .then(data => console.log(data))
+    //   .catch(error => console.log(error.message));
+
+    // axios.post('http://localhost:3001/dishes', { "name": "chicken noodles", "price": 350 })
+    //   .then(response => console.log(response));
+
+    // axios.put('http://localhost:3001/dishes/3', { "name": "chicken noodles1", "price": 3501 })
+    //   .then(response => console.log(response));
+
+    axios.delete('http://localhost:3001/dishes/3')
+      .then(response => console.log(response));

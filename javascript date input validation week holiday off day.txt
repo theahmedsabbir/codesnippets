@@ -1,0 +1,25 @@
+
+    <script type="text/javascript">
+        function validateOffDays(e,installer_id, off_weeks){  
+            // console.log(e);
+            // return;
+
+            // getting off week's array
+            off_weeks_array = [];
+            for (var i = 0; i < off_weeks.length; i++) {
+                off_weeks_array.push(Number(off_weeks[i].off_day));
+            }
+
+            console.log(off_weeks_array);
+
+            dateInput = document.getElementById('date' + installer_id);
+
+            var week = new Date(dateInput.value).getUTCDay();
+            console.log(week);
+            if(off_weeks_array.includes(week)){
+              e.preventDefault();
+              dateInput.value = '';
+              alert('Installer is not available.');
+            }
+        }
+    </script>

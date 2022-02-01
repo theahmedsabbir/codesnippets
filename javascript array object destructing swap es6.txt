@@ -1,0 +1,8 @@
+//array destructing
+var [first, second, third] = ["Laide", "Gabriel", "Jets"];
+
+//swapping 
+[a,b] = [b,a]
+
+//object destructing
+https://www.javascripttutorial.net/es6/javascript-object-destructuring/

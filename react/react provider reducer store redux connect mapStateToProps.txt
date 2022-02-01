@@ -1,0 +1,84 @@
+https://drive.google.com/file/d/1a9mhq_fOd6NMnA7pY0Ntha8df_ek79Az/view?usp=sharing
+
+//App.js - root file - mentioning provider with store
+
+import { Provider } from 'react-redux';
+import myStore from './redux/store';
+
+function App() {
+  return (
+    <div className='App'>
+      <Provider store={myStore}>
+        <BrowserRouter>
+          <MainComponent />
+        </BrowserRouter>
+      </Provider>
+    </div>
+  );
+}
+
+
+
+//reducer.js - creating reducer
+
+import DISHES from "../data/dishes";
+
+const initialState = {
+    dishes: DISHES,
+}
+
+export const Reducer = (state = initialState, action) => {
+    return state;
+}
+
+
+//store.js - creating store
+import { createStore } from 'redux';
+import { Reducer } from './reducer';
+
+const myStore = createStore(Reducer);
+
+export default myStore; 
+
+
+//Home.js - connect react redux with component
+
+
+import react, { Component } from "react";
+import { connect } from 'react-redux';
+
+const mapStateToProps = state => {
+
+    // console.log("mapStateToProps: ", state);
+
+    // ekhane jeta return kortese sheta Home component er componentDidMount e props akare dhora jabe
+    return {
+        state: state.dishes,
+    }
+
+}
+
+
+class Home extends Component {
+
+    componentDidMount() {
+
+        // console.log("Home State: ", this.state);
+
+        //**ekhane prop akare render hocche
+        console.log("Home Props: ", this.props);
+
+    }
+
+    render() {
+        document.title = "Home";
+        return (
+            <div>
+
+            </div >
+        );
+    }
+}
+
+export default connect(mapStateToProps)(Home);
+

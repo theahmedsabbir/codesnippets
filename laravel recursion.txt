@@ -1,0 +1,29 @@
+
+                                                @foreach(App\Model\Head::where('head_id', null)->get() as $root)
+                                                    <tr>
+                                                        <td><strong>{{$root->name}}</strong></td>
+                                                        <td>{{$root->balance}}</td>
+                                                    </tr>
+                                                    
+                                                    @include('backend.admin.account.balance_sheet_recursive', ['root' => $root])
+                                                @endforeach
+
+
+
+
+
+//recursive file 
+
+@if ($root->children->count() > 0)
+
+	@foreach($root->children as $child)
+		<tr>
+		    <td><strong>{{$child->name}}</strong></td>
+		    <td>{{$child->balance}}</td>
+		</tr>
+
+		@include('backend.admin.account.balance_sheet_recursive', ['root' => $child])
+	@endforeach
+
+@endif
+

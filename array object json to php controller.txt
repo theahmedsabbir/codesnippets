@@ -1,0 +1,8 @@
+//input
+<input type="hidden" name="tyreSizes" id="tyreSizes" value="">
+
+//object to json as value
+$('#tyreSizes').val(JSON.stringify( response.data ));
+
+//in php controller 
+dd(json_decode($r->tyreSizes));

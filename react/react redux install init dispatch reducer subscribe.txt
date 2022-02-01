@@ -1,0 +1,63 @@
+https://drive.google.com/drive/folders/18x4u2OCpyQB420OW7YIY1Uvc9ywU2eRE?usp=sharing
+
+
+//start a blank project to test 
+npm init --yes
+npm install redux 
+
+//index.js
+const redux = require('redux'); //calling redux
+
+// defining sample state for reducer
+const initState = {
+    num: 0
+}
+
+// Reducer for store --> accepts state and a action --> returns a state/object
+const rootReducer = (state = initState, action) => {
+	//workings based on action dispatched from dispathers
+	//shobsomoy state er copy nie kaj kora uchit
+    if (action.type === 'INC_NUM') {
+        return {
+            ...state, 
+            num: state.num + 1
+        } 
+    }
+    if (action.type === 'ADD_NUM') {
+        return {
+            ...state,
+            num: state.num + action.a
+        }
+    }
+    if (action.type === 'DEC_NUM') {
+        return {
+            ...state,
+            num: state.num - 1
+        }
+    }
+    return state;
+}
+
+// Store
+const store = redux.createStore(rootReducer);
+
+console.log(store.getState());
+
+// Subscribe
+store.subscribe(() => {
+    console.log("[Subscribe]", store.getState());
+})
+
+// Dispatching Action here
+store.dispatch({
+    type: 'ADD_NUM',
+    a: 34
+})
+
+store.dispatch({
+    type: 'INC_NUM'
+});
+
+store.dispatch({
+    type: 'DEC_NUM'
+})

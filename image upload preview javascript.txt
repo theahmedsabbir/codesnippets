@@ -1,0 +1,19 @@
+youtube.com/watch?v=T0D_2YNcP7g
+
+
+
+
+		      				<label for="">Logo</label>
+		      				<input type="file" name="logo" class="form-control-file" required onchange="return previewImage(event)">
+		      				<img id="output" width="100px">
+
+
+
+
+
+<script type="text/javascript">
+	function previewImage(event){
+		var output = document.getElementById('output');
+		output.src = URL.createObjectURL(event.target.files[0]);
+	}
+</script>

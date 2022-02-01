@@ -1,0 +1,31 @@
+//sendglobal
+
+https://www.smsglobal.com/sdks-how-to-get-started/
+
+public function smsSend(Request $request, Client $client)
+    {
+       $clientNumber = $client->contact;
+       $data = $request->message;
+        // get your REST API keys from MXT https://mxt.smsglobal.com/integrations
+        \SMSGlobal\Credentials::set('8038460be8ae18db31dcd8e513319f6f', '34f6b2d402a5ee798893c64033dc995e');
+
+        $sms = new \SMSGlobal\Resource\Sms();
+        //dd($response = $sms->sendToOne('8801855131495', 'This is a test message.'));
+        try {
+            $response = $sms->sendToOne($clientNumber, $data);
+            Toastr::success('Your Client Send your Message', 'Success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+
+
+// installation issue 
+https://stackoverflow.com/questions/70254525/how-to-solve-problem-conflicts-with-your-root-composer-json-require
+
+
+update composer.json then run composer update 
+"guzzlehttp/guzzle": "^6.3|^7.0.1",
+

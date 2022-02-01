@@ -1,0 +1,6 @@
+
+    <div class="form-group">
+        <label>Banner</label>
+        <input type="text" class="form-control" name="name" value="{{ old('name', !empty($department) ? $department->name : '') }}" placeholder="Department name">
+        <span style="color: red"> {{ $errors->has('name') ? $errors->first('name') : ' ' }}</span>
+    </div>

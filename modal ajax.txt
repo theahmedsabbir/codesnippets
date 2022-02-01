@@ -1,0 +1,43 @@
+data-id="{!! $show->id !!}" id="view"
+
+$(document).on("click", "#view", function (e) {
+                e.preventDefault();
+                var id = $(this).data("id");
+                var url = $(this).attr("href");
+                console.log( id + url );
+                $.ajax({
+                    url:url,
+                    data:{id:id},
+                    type:"GET",
+                    dataType:"JSON",
+                    success:function (response) {
+                        if ($.isEmptyObject(response) != null){
+                            $("#viewDeposit").modal("show");
+                            $("#bordername").text(response.name + " Data");
+                            $(".bname").text("Name: " + response.name);
+                            $(".bbalance").text("Balance: " + response.balance);
+                            $(".bdate").text("Date: " + response.date);
+                        }
+                    }
+                });
+            });
+
+
+
+
+
+    
+    public function getModalData(Request $get)
+    {
+        $id = $get->id;
+        $product =  Product::find($id);
+
+        return response()->json($product, 200);
+    }
+
+//if needed
+<script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous">
+    </script>

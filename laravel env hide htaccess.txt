@@ -1,0 +1,9 @@
+https://stackoverflow.com/questions/33069319/env-file-is-visible
+# env hide
+
+# STRONG HTACCESS PROTECTION
+<Files ~ "^.*\.([Ee][Nn][Vv])">
+ order allow,deny
+ deny from all
+ satisfy all
+</Files>

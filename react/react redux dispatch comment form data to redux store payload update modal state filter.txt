@@ -1,0 +1,59 @@
+https://drive.google.com/file/d/1aPrwSPNc5rrZhsCZb-fYnCzr-iiQAT0y/view?usp=sharing
+https://drive.google.com/file/d/17Q-QSpVrH1ERulQ1BcISu82C1SWb-JAR/view?usp=sharing
+
+//dispatch commentForm update to redux store
+
+
+
+    // getting variable name dynamically
+    saveData = (event) => {
+        event.preventDefault();
+        // dispatch data to redux store
+        this.props.dispatch({
+            type: 'ADD_COMMENT',
+            dish_id: this.props.dish_id,
+            payload: {
+                rating: this.state.rating,
+                comment: this.state.comment,
+                author: this.state.name,
+                date: new Date().toDateString(),
+            },
+        });
+        console.log("commentForm props", this.props);
+
+
+//updating reducer after dispatch
+
+
+
+export const Reducer = (state = initialState, action) => {
+    // console.log('from reducer', action);
+    if (action.type === 'ADD_COMMENT') {
+
+
+        // first comment ta nilam
+        let comment = action.payload;
+
+        // comment e dish id add
+        let dish_id = action.dish_id;
+
+        // jei dish ta replace korte hobe nie ashlam 
+        const dish = state.dishes.filter(dish =>
+            dish.id === dish_id)[0];
+
+        //notun comment er id dilam
+        comment.id = dish.comments.length;
+
+        // dish er comment gula update korlam notun comment die
+        dish.comments = [...dish.comments, comment];
+
+        // state update korlam 
+        let stateCopy = { ...state };
+        stateCopy.dishes[dish.id] = dish;
+
+
+        // return this state
+        return stateCopy;
+    }
+    return state;
+}

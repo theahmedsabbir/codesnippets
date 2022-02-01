@@ -1,0 +1,47 @@
+import logo from './logo.svg';
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Hello React !!!
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          theahmedsabbir@gmail.com
+        </a>
+        <AnotherComponent></AnotherComponent>
+        <AnotherComponent />
+      </header>
+    </div>
+  );
+}
+
+function AnotherComponent() {
+  return (
+    <h1>I am another component</h1>
+  );
+}
+
+export default App;
+
+//class component
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <h1>Hello World!</h1>
+        <Person />
+      </div>
+    );
+  }
+}
+
+

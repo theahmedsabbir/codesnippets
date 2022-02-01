@@ -1,0 +1,6 @@
+
+
+    public function productManus()
+    {
+        return $this->belongsToMany(WebManufacture::class, 'product_manufactures', 'product_id', 'manufacture_id');
+    }
